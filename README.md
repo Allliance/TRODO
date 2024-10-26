@@ -3,7 +3,7 @@ Official PyTorch implementation of "Scanning Trojaned Models Using Out-of-Distri
 
 
 <p align="center">
-<img src="figures/main_figure.jpg" alt="Main method overview" height="550" width="750"/>
+<img src="figures/main_figure.jpg" alt="Main method overview"/>
 </p>
 
 # Requirements
