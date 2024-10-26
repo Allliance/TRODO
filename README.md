@@ -11,10 +11,10 @@ TRODO is a new trojan (backdoor) scanning method for deep neural networks that i
 
 # Usage
 
-You can give a try on trodo by notebook [text2im](notebooks/trodo.ipynb) [![][colab]][colab-trodo] which implements trodo to detect trojans in models trained on CIFAR10 dataset.
+You can give a try on trodo by notebook [trodo](trodo.ipynb) [![][colab]][colab-trodo] which implements trodo to detect trojans in models trained on CIFAR10 dataset.
 
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
-[colab-trodo]: <https://colab.research.google.com/github/openai/glide-text2im/blob/main/notebooks/text2im.ipynb>
+[colab-trodo]: <https://colab.research.google.com/github/Allliance/trodo/blob/main/trodo.ipynb>
 
 # Results
 
