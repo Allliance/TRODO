@@ -2,3 +2,4 @@ torch
 torchvision
 albumentation
 scikit-learn
+tqdm

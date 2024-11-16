@@ -1,7 +1,7 @@
 from tqdm import tqdm
 import torch
 import gc
-from sklearn.metrics import roc_auc_score, accuracy_score
+from sklearn.metrics import roc_auc_score
 from ..scores.msp import get_msp
 
 def evaluate(model, loader, device, metric='acc', attack=None, progress=False):
