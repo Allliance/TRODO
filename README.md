@@ -9,16 +9,21 @@ TRODO is a new trojan (backdoor) scanning method for deep neural networks that i
 
 # Requirements
 
+The current version requires the following python and CUDA versions:
+- python 3.7+
+- CUDA 11.1+
+
+Additionally, the list of the packages used for this implementation is available in the `requirements.txt` file. To install them, use the following command:
+```
+pip install -r requirements.txt
+```
+
 # Usage
 
-You can give a try on trodo by notebook [trodo](trodo.ipynb) [![][colab]][colab-trodo] which implements trodo to detect trojans in models trained on CIFAR10 dataset.
+You can give a try on trodo by notebook [trodo](TRODO.ipynb) [![][colab]][colab-trodo] which implements TRODO to detect trojans in models trained on CIFAR10 dataset. The label mappings are All2One and the models are not trained aversarially.
 
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
 [colab-trodo]: <https://colab.research.google.com/github/Allliance/trodo/blob/main/trodo.ipynb>
-
-# Results
-
-# To be Added
 
 # Citation 
 Please cite our work if you use the codebase: 
