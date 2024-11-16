@@ -1,9 +1,6 @@
 # For OOD Data: 1 is for ID, 0 is for OOD
 OUT_LABEL = 0
 IN_LABEL = 1
-# For Model Dataset: 1 is for Clean, 0 is for Bad
-CLEAN_LABEL = 1
-BACKDOOR_LABEL = 0
 
 TINY_IMAGENET_ROOT = "~/data/tinyimagenet/"
 
