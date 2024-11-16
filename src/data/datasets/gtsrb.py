@@ -2,11 +2,17 @@ import  os
 from PIL import Image
 import csv
 import torch.utils.data as data
-
+import subprocess, os, stat
 from BAD.data.utils import run_download_bash_file
 
 DATA_ROOT = '/data/gtsrb'
 
+def run_download_bash_file(script_path):
+    st = os.stat(script_path)
+    os.chmod(script_path, st.st_mode | stat.S_IEXEC)
+    subprocess.run(['bash', script_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    
+    
 class GTSRB(data.Dataset):
     def __init__(self, train, data_root=DATA_ROOT, transform=None, download=False):
         super(GTSRB, self).__init__()
