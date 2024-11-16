@@ -1,18 +1,13 @@
-import random
 import torch
 import torchvision
 from torchvision import transforms
-from BAD.data.datasets.custom_datasets import MixedDataset, SingleLabelDataset, DummyDataset, NegativeDataset
-from BAD.data.datasets.gtsrb import GTSRB
-from BAD.data.datasets.pubfig import PubFig
-from torch.utils.data import Subset
-from collections import defaultdict
-from copy import deepcopy
-import PIL.Image
+from .datasets.custom_datasets import MixedDataset, SingleLabelDataset, DummyDataset, NegativeDataset
+from .datasets.gtsrb import GTSRB
+from .datasets.pubfig import PubFig
 from torchvision.datasets import ImageFolder
-from BAD.data.transforms import *
-from BAD.data.utils import sample_dataset, filter_labels
-from BAD.constants import OUT_LABEL, IN_LABEL, TINY_IMAGENET_ROOT
+from .transforms import *
+from .utils import sample_dataset
+from ..constants import OUT_LABEL, IN_LABEL, TINY_IMAGENET_ROOT
 import os
 
 ROOT = '~/data'
