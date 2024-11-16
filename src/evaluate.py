@@ -83,7 +83,7 @@ def get_models_scores(model_dataset,
                 seen_labels.add(label)
                 
                 if len(seen_labels) > 1:
-                    print("Current auc:", roc_auc_score(labels, scores))
+                    print("Current:", roc_auc_score(labels, scores))
         except Exception as e:
             if strict:
                 raise e

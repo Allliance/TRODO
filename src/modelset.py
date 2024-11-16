@@ -9,6 +9,8 @@ class ModelDataset(Dataset):
                  clean_folder,
                  trojaned_folder,
                  model_loader,
+                 sample=False,
+                 sample_portion=0.2,
                  ):
         
         self.model_loader = model_loader
@@ -30,6 +32,9 @@ class ModelDataset(Dataset):
                 })
         
         random.shuffle(self.models_data)
+        
+        if sample:
+            self.models_data = random.choices(self.models_data, k=int(len(self.models_data)* sample_portion))
 
     def __len__(self):
         return len(self.models_data)
