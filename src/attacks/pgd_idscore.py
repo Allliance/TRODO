@@ -51,7 +51,7 @@ class PGD(Attack):
             outputs = self.get_logits(adv_images)
             probs = torch.softmax(outputs, dim=1)
             
-            cost = torch.max(probs, dim=1).values
+            cost = torch.sum(torch.max(probs, dim=1).values)
 
             # Update adversarial images
             grad = torch.autograd.grad(cost, adv_images,
