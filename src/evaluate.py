@@ -50,10 +50,11 @@ def mean_id_score_diff(model,
     return np.mean(after_attack_scores) - np.mean(before_attack_scores)
 
 def get_models_scores(model_dataset,
-               model_score_function,
-               progress,
-               live=True,
-               strict=False):
+                        model_score_function,
+                        progress,
+                        verbose=False,
+                        live=True,
+                        strict=False):
     
     labels = []
     scores = []
@@ -77,7 +78,8 @@ def get_models_scores(model_dataset,
             scores.append(score)
             labels.append(label)
             if live:
-                print("Label:", label, "Score:", score)
+                if verbose:
+                    print("Label:", label, "Score:", score)
                 seen_labels.add(label)
                 
                 if len(seen_labels) > 1:
@@ -86,7 +88,7 @@ def get_models_scores(model_dataset,
             if strict:
                 raise e
             failed_models += 1
-            print(f"The following error occured during the evaluation of a model with name {model.meta_data.get('name') if model else 'NaN'}: {str(e)}")
+            print(f"The following error occured during the evaluation of a model: {str(e)}")
             print("Skipping this model")
     print("No. of failed models:", failed_models)
     return scores, labels
@@ -98,6 +100,7 @@ def evaluate_modelset(model_dataset,
                         signature_function,
                         signature_function_kwargs={},
                         get_dataloader_func=None,
+                        verbose=False,
                         progress=False):
     
     def model_score_function(model):
@@ -107,6 +110,9 @@ def evaluate_modelset(model_dataset,
                                  dataloader,
                                  **signature_function_kwargs)
     
-    scores, labels = get_models_scores(model_dataset, model_score_function, progress)
+    scores, labels = get_models_scores(model_dataset,
+                                       model_score_function,
+                                       progress,
+                                       verbose=verbose)
     
     return get_results(scores, labels)
