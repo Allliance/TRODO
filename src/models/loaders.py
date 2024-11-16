@@ -69,26 +69,3 @@ def load_vit(record_path, num_classes=10, **model_kwargs):
     model.to(device)
     model.eval()
     return model
-
-
-
-
-
-def load_vgg(record_path, num_classes=10, **model_kwargs):
-    init_num_filters = 64
-    inter_fc_dim = 384
-    
-    net = CNNClassifier(init_num_filters=init_num_filters,
-                         inter_fc_dim=inter_fc_dim,nofclasses=num_classes,
-                         nofchannels=3,use_stn=False)
-    
-    model_data = torch.load(record_path)['model']
-    
-    net.load_state_dict(copy.deepcopy(model_data))
-    net.eval()
-    
-    model = Model(net, feature_extractor=net.get_features, **model_kwargs)
-    model.to(device)
-    model.eval()
-    
-    return model
