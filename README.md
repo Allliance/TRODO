@@ -23,7 +23,7 @@ pip install -r requirements.txt
 You can give a try on trodo by notebook [TRODO](TRODO.ipynb) [![][colab]][colab-trodo] which implements TRODO to detect trojans in models trained on CIFAR10 dataset. The label mappings are All2One and the models are not trained aversarially.
 
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
-[colab-trodo]: <https://colab.research.google.com/github/Allliance/trodo/blob/main/trodo.ipynb>
+[colab-trodo]: <https://colab.research.google.com/github/rohban-lab/trodo/blob/main/TRODO.ipynb>
 
 # Citation 
 Please cite our work if you use the codebase: 
