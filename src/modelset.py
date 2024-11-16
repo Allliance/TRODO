@@ -1,71 +1,33 @@
-import os, random, pathlib
+import os, random
 from torch.utils.data import Dataset
-import re
 from copy import copy
 
-CLEAN_LABEL = 'clean'
-
-def extract_models_paths(root_dir):
-    paths = []
-    for root, _, files in os.walk(root_dir):
-        new_paths = [os.path.join(root, file) for file in files if file.endswith('.pt')]
-        paths += new_paths
-    return paths
-
-def extract_target(filepath):
-    match = re.search(r'target(\d)', filepath)
-    if match:
-        return int(match.group(1))
-    return None
-
-def extract_info_from_filepath(filepath):
-    target = extract_target(filepath)
-    return {
-        'path': filepath,
-        'target': target
-    }
+CLEAN_LABEL = 0
 
 class ModelDataset(Dataset):
-    def __init__(self, cleans_folder, bads_folder, model_loader, sample=False,
-                 sample_k=5, discards=None, version=None, more_clean=True, balanced=True):
-        self.data = []
-        self.model_data_dict = {}
-        self.loader = model_loader
-        self.bads_data = []
-        self.cleans_data = []
+    def __init__(self,
+                 clean_folder,
+                 trojaned_folder,
+                 model_loader,
+                 sample=False,
+                 sample_k=5,
+                 ):
         
-        self.version = version
-        
-        if discards is None:
-            discards = []
-        
-        attack_folders = [x for x in os.listdir(bads_folder) if os.path.isdir(os.path.join(bads_folder, x))]
-        for attack_folder in attack_folders:
-            if attack_folder in discards + [CLEAN_LABEL]:
-                continue
-            bad_data = [extract_info_from_filepath(model_path) for model_path in \
-                extract_models_paths(os.path.join(bads_folder, attack_folder))]
+        self.models_data = []
+        for model_file in os.listdir(clean_folder):
+            if model_file.lower().endswith(".pt"):
+                self.models_data.append({
+                    'path': os.path.join(clean_folder, model_file),
+                    'label': CLEAN_LABEL,
+                })
+                
             
-            for i in range(len(bad_data)):
-                bad_data[i]['attack'] = attack_folder
-
-            if sample:
-                bad_data = random.sample(bad_data, sample_k)
-            self.bads_data += bad_data
-            self.model_data_dict[attack_folder] = bad_data
-        
-        if CLEAN_LABEL not in discards:
-            
-            cleans_data = [extract_info_from_filepath(model_path) for model_path in extract_models_paths(cleans_folder)]
-            
-            if balanced:
-                cleans_data = random.sample(cleans_data, min(len(self.bads_data), len(cleans_data)))
-            self.cleans_data = cleans_data
-        
-        self.data = self.bads_data + self.cleans_data
-        self.model_data_dict[CLEAN_LABEL] = self.cleans_data
-    
-        random.shuffle(self.data)
+        for model_file in os.listdir(trojaned_folder):
+            if model_file.lower().endswith(".pt"):
+                self.models_data.append({
+                    'path': os.path.join(trojaned_folder, model_file),
+                    'label': 1 - CLEAN_LABEL,
+                })
 
     def load_model(self, model_data):
         return self.loader(model_data['path'], model_data)
@@ -81,15 +43,12 @@ class ModelDataset(Dataset):
         return self.load_model(model_data)
 
     def __len__(self):
-        return len(self.data)
+        return len(self.models_data)
 
     def __getitem__(self, idx):
-        model = self.load_model(self.data[idx])
-        label = int(self.data[idx].get('attack') is not None)
-        data = copy(self.data[idx])
+        model_data = self.models_data[idx]
+        model = self.loader(model_data['path'], model_data)
+        label = model_data['label']
         
-        if self.version is not None:
-            return model, label
-        else:
-            return model, label, data
+        return model, label
     
