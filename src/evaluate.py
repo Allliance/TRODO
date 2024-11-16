@@ -101,6 +101,7 @@ def evaluate_modelset(model_dataset,
                         signature_function_kwargs={},
                         get_dataloader_func=None,
                         verbose=False,
+                        strict=False,
                         progress=False):
     
     def model_score_function(model):
@@ -113,6 +114,7 @@ def evaluate_modelset(model_dataset,
     scores, labels = get_models_scores(model_dataset,
                                        model_score_function,
                                        progress,
+                                       strict=strict,
                                        verbose=verbose)
     
     return get_results(scores, labels)
