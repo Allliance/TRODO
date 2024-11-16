@@ -104,9 +104,8 @@ def evaluate_modelset(model_dataset,
         dataloader = get_dataloader_func()
         
         return signature_function(model,
-                              dataloader,
-                              progress=progress,
-                              **signature_function_kwargs)
+                                 dataloader,
+                                 **signature_function_kwargs)
     
     scores, labels = get_models_scores(model_dataset, model_score_function, progress)
     
