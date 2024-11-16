@@ -28,7 +28,7 @@ def get_transform(dataset):
   else:
       return None
 
-def get_dataset(name, transform=None, train=False,
+def get_dataset(name, transform=None, train=True,
                 dummy_params={}, download=False, in_dataset=None, **kwargs):
     '''
     Available datasets:
