@@ -3,7 +3,6 @@ from PIL import Image
 import csv
 import torch.utils.data as data
 import subprocess, os, stat
-from BAD.data.utils import run_download_bash_file
 
 DATA_ROOT = '/data/gtsrb'
 
