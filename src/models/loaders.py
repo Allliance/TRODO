@@ -2,9 +2,8 @@ import copy
 import pickle 
 from torchvision import transforms
 import torch
-from BAD.models.base_model import BaseModel as Model
-from BAD.models.preact import PreActResNet18
-from BAD.models.vgg_custom import CNNClassifier
+from .base_model import BaseModel as Model
+from .preact import PreActResNet18
 from torchvision.models import resnet18
 from torchvision.models import vit_b_16
 
