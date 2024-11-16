@@ -101,7 +101,7 @@ def evaluate_modelset(model_dataset,
                         progress=False):
     
     def model_score_function(model):
-        dataloader = get_dataloader_func(model)
+        dataloader = get_dataloader_func()
         
         return signature_function(model,
                               dataloader,
