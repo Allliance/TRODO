@@ -2,7 +2,7 @@ import random
 from torch.utils.data import Subset
 from collections import defaultdict
 
-def sample_dataset(dataset, portion=0.1, balanced=False):
+def sample_dataset(dataset, portion=0.01, balanced=False):
     if portion>1:
         portion = portion / len(dataset)
     if not balanced:
