@@ -8,6 +8,7 @@ from torchvision.datasets import ImageFolder
 import os
 import random
 from .neg_transformations import get_cutpaste, get_distort, get_elastic, get_mixup, get_rot, get_gridmask, get_jigsaw, get_random_erasing, get_colorjitter_plus
+import numpy as np
 
 class NegativeDataset(Dataset):
     def __init__(self, base_dataset, label, neg_transformations, sequential=False, **kwargs):
