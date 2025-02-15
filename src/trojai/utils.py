@@ -13,6 +13,7 @@ from .dataset import ExampleDataset
 from ..data.loaders import get_ood_loader
 from ..data.utils import sample_dataset
 from collections import defaultdict
+from torch.utils.data import Subset
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
