@@ -12,6 +12,7 @@ from torch.utils.data import DataLoader
 from BAD.trojai.dataset import ExampleDataset
 from BAD.data.loaders import get_ood_loader
 from BAD.data.utils import sample_dataset
+from collections import defaultdict
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
@@ -112,3 +113,33 @@ def get_oodloader_trojai(model, out_dataset, sample_num=None, batch_size=None, *
                           out_dataset=out_dataset,
                           out_transform=transforms.Compose([transforms.Resize(224), transforms.ToTensor()]),
                           batch_size=batch_size, **kwargs)
+
+def split_dataset_by_arch(dataset):
+    indices = defaultdict(lambda : [])
+    all_archs = set()
+    for i, model_data in enumerate(dataset.model_data):
+        indices[model_data['arch']].append(i)
+        all_archs.add(model_data['arch'])
+    
+    # Reorder the indices in each arch, so that the labels are alternating: 0, 1, 0 , 1, ...
+    # To do this, first obtain the indices of the models with label 0 and 1
+    # Then, reorder them by taking the first element of the first list, then the first element of the second list, then the second element of the first list, etc.
+    for arch in all_archs:
+        indices[arch] = sorted(indices[arch])
+        label_0_indices = [i for i in indices[arch] if dataset.model_data[i]['label'] == 0]
+        label_1_indices = [i for i in indices[arch] if dataset.model_data[i]['label'] == 1]
+        new_indices = []
+        for i in range(min(len(label_0_indices), len(label_1_indices))):
+            new_indices.append(label_0_indices[i])
+            new_indices.append(label_1_indices[i])
+            
+        if len(label_0_indices) > len(label_1_indices):
+            new_indices += label_0_indices[len(label_1_indices):]
+        else:
+            new_indices += label_1_indices[len(label_0_indices):]
+            
+        indices[arch] = new_indices
+    
+    return {
+        arch: Subset(dataset, arch_indices) for arch, arch_indices in indices.items()
+    }
