@@ -1,6 +1,24 @@
 import matplotlib.pyplot as plt
 import torchvision
 from torchvision.transforms.functional import to_pil_image
+import seaborn as sns
+
+def draw_dists(a, b):
+    # sample
+
+    plt.figure(figsize=(10, 6))
+
+    sns.histplot(a, bins=20, color='blue', label='Clean Models Scores', kde=True, stat="density", alpha=0.5)
+    sns.histplot(b, bins=20, color='orange', label='Trojaned Models scores', kde=True, stat="density", alpha=0.5)
+
+    plt.xlabel('Value')
+    plt.ylabel('Density')
+    plt.title('Distribution of Scores for Trojaned Models and Clean models')
+    plt.legend()
+
+    # Display the plot
+    plt.show()
+
 
 def plot_images_by_label(image_dict):
     plt.clf()
