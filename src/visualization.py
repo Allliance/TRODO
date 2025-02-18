@@ -3,13 +3,11 @@ import torchvision
 from torchvision.transforms.functional import to_pil_image
 import seaborn as sns
 
-def draw_dists(a, b):
-    # sample
-
+def draw_dists(dist1, dist2):
     plt.figure(figsize=(10, 6))
 
-    sns.histplot(a, bins=20, color='blue', label='Clean Models Scores', kde=True, stat="density", alpha=0.5)
-    sns.histplot(b, bins=20, color='orange', label='Trojaned Models scores', kde=True, stat="density", alpha=0.5)
+    sns.histplot(dist1, bins=20, color='blue', label='Clean Models Scores', kde=True, stat="density", alpha=0.5)
+    sns.histplot(dist2, bins=20, color='orange', label='Trojaned Models scores', kde=True, stat="density", alpha=0.5)
 
     plt.xlabel('Value')
     plt.ylabel('Density')
